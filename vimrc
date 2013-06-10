@@ -1,4 +1,9 @@
-set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
+" get rid of Vi compatibility mode. SET FIRST!
+set nocompatible
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
 "set t_Co=256              " enable 256-color mode.
 "colorscheme desert        " set colorscheme
 "colorscheme koehler
@@ -44,6 +49,7 @@ syntax enable
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
+set nobackup
 set expandtab
 
 " Be smart when using tabs ;)
