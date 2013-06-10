@@ -1,3 +1,5 @@
+#! /bin/bash
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -95,13 +97,13 @@ fi
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls='/bin/ls -F --color=auto'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
-    #alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
+    alias grep='/bin/grep --color=auto'
+    alias fgrep='/bin/fgrep --color=auto'
+    alias egrep='/bin/egrep --color=auto'
 fi
 
 
@@ -114,24 +116,37 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-alias ls='/bin/ls -F --color=auto'
-
 genPS1 () {
-    local black="$(     tput setf 0 )"  #   0: Black        / Dark gray
-    local blue="$(      tput setf 1 )"  #   1: Dark Blue    / Blue
-    local green="$(     tput setf 2 )"  #   2: Dark Green   / Green
-    local cyan="$(      tput setf 3 )"  #   3: Dark Cyan    / Cyan
-    local red="$(       tput setf 4 )"  #   4: Dark Red     / Red
-    local magenta="$(   tput setf 5 )"  #   5: Dark Magenta / Magenta
-    local brown="$(     tput setf 6 )"  #   6: Brown        / Yellow
-    local gray="$(      tput setf 7 )"  #   7: Gray         / White
-
-    local bold="$(      tput bold   )"
-    local reset="$(     tput sgr0   )"
+    local tput=$(command -pv tput)
+    if [[ -n $tput ]]
+    then
+        local black="$(     tput setf 0 )"  #   0: Black        / Dark gray
+        local blue="$(      tput setf 1 )"  #   1: Dark Blue    / Blue
+        local green="$(     tput setf 2 )"  #   2: Dark Green   / Green
+        local cyan="$(      tput setf 3 )"  #   3: Dark Cyan    / Cyan
+        local red="$(       tput setf 4 )"  #   4: Dark Red     / Red
+        local magenta="$(   tput setf 5 )"  #   5: Dark Magenta / Magenta
+        local brown="$(     tput setf 6 )"  #   6: Brown        / Yellow
+        local gray="$(      tput setf 7 )"  #   7: Gray         / White
     
+        local bold="$(      tput bold   )"
+        local reset="$(     tput sgr0   )"
+    else
+        # Use ANSI colors
+        local black="\033[30m"
+        local red="\033[31m"
+        local green="\033[32m"
+        local brown="\033[33m"
+        local blue="\033[34m"
+        local magenta="\033[35m"
+        local cyan="\033[36m"
+        local gray="\033[37m"
+
+        local bold="\033[1m"
+        local reset="\033[0m"
+    fi
     echo "$reset$bold$gray\u$green@$cyan\h$magenta $brown\w$reset\n\$ "
 }
-echo ps1
 PS1="$(genPS1)"
 
 unset genPS1
@@ -139,10 +154,12 @@ unset genPS1
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
+if [[ $(uname -o) != Cygwin ]]; then    
+  if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+      . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+      . /etc/bash_completion
+    fi
   fi
 fi
