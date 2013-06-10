@@ -2,6 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+echo "=> .bashrc"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -72,6 +74,24 @@ xterm*|rxvt*)
     ;;
 esac
 
+[[ -d ~/bin ]] && export PATH=~/bin:"$PATH"
+
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+# Note: PS1 and umask are already set in /etc/profile. You should not
+# need this unless you want different defaults for root.
+# PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
+# umask 022
+
+# You may uncomment the following lines if you want `ls' to be colorized:
+# export LS_OPTIONS='--color=auto'
+# eval "`dircolors`"
+# alias ls='ls $LS_OPTIONS'
+# alias ll='ls $LS_OPTIONS -l'
+# alias l='ls $LS_OPTIONS -lA'
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -84,10 +104,6 @@ if [ -x /usr/bin/dircolors ]; then
     #alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -97,6 +113,28 @@ fi
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
+alias ls='/bin/ls -F --color=auto'
+
+genPS1 () {
+    local black="$(     tput setf 0 )"  #   0: Black        / Dark gray
+    local blue="$(      tput setf 1 )"  #   1: Dark Blue    / Blue
+    local green="$(     tput setf 2 )"  #   2: Dark Green   / Green
+    local cyan="$(      tput setf 3 )"  #   3: Dark Cyan    / Cyan
+    local red="$(       tput setf 4 )"  #   4: Dark Red     / Red
+    local magenta="$(   tput setf 5 )"  #   5: Dark Magenta / Magenta
+    local brown="$(     tput setf 6 )"  #   6: Brown        / Yellow
+    local gray="$(      tput setf 7 )"  #   7: Gray         / White
+
+    local bold="$(      tput bold   )"
+    local reset="$(     tput sgr0   )"
+    
+    echo "$reset$bold$gray\u$green@$cyan\h$magenta $brown\w$reset\n\$ "
+}
+echo ps1
+PS1="$(genPS1)"
+
+unset genPS1
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile

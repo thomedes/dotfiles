@@ -1,20 +1,60 @@
 set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
-filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
-set t_Co=256              " enable 256-color mode.
-syntax enable             " enable syntax highlighting (previously syntax on).
-colorscheme desert        " set colorscheme
+"set t_Co=256              " enable 256-color mode.
+"colorscheme desert        " set colorscheme
+"colorscheme koehler
+"colorscheme ron
+colorscheme torte
 set number                " show line numbers
 set laststatus=2          " last window always has a statusline
-filetype indent on        " activates indenting for files
 set nohlsearch            " Don't continue to highlight searched phrases.
 set incsearch             " But do highlight as you type your search.
 set ignorecase            " Make searches case-insensitive.
-set ruler                 " Always show info along bottom.
-set autoindent            " auto-indent
-set tabstop=4             " tab spacing
 set softtabstop=4         " unify
-set shiftwidth=4          " indent/outdent by 4 columns
 set shiftround            " always indent/outdent to the nearest tabstop
-set expandtab             " use spaces instead of tabs
-set smarttab              " use tabs at the start of a line, spaces elsewhere
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Sets how many lines of history VIM has to remember
+set history=700
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VIM user interface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Always show current position
+set ruler
+
+" Show matching brackets when text indicator is over them
+set showmatch
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Enable syntax highlighting
+syntax enable
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Text, tab and indent related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+set autoindent
+set si "Smart indent
+"set wrap "Wrap lines
 set nowrap                " don't wrap text
+
