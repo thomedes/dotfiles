@@ -143,11 +143,33 @@ genPS1 () {
         local gray="\033[37m"
 
         local bold="\033[1m"
-        local reset="\033[0m"
+        local reset="\033[0m$gray"
     fi
-    echo "$reset$bold$gray\u$green@$cyan\h$magenta $brown\w$reset\n\$ "
+
+    echo -n "$reset$bold$gray\u$green@$cyan\h$magenta $brown\w$reset"
+    
+    local git=$(command -pv git)
+    
+    # define __git_ps1 if have git && it's not already defined
+    if [[ -n $git ]]; then
+      if [[ ! $(type -t __git_ps1) == function ]]; then
+        __git_ps1 () {
+          local b="$($git symbolic-ref HEAD 2>/dev/null)"
+          if [ -n "$b" ]; then 
+            echo " (${b##refs/heads/})"; 
+          fi
+        }
+      fi
+      echo -n "$bold$green\$(__git_ps1)$reset"
+    fi
+    
+    echo "\n\$ "
 }
 PS1="$(genPS1)"
+
+
+#export PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\n\$(__git_ps1)\[\e[0m\]\$ "
+
 
 unset genPS1
 

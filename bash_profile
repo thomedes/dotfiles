@@ -19,7 +19,7 @@ fi
 
 case "$(uname -o)" in
     (Cygwin)
-        SSH_ENV="$HOME/.ssh-environment"
+        SSH_ENV=~/.ssh-environment
 
         function start_pageant {
             echo "Initializing new SSH agent..."
@@ -49,13 +49,4 @@ if [ -z "$SSH_AUTH_SOCK" -a -x /usr/bin/ssh-pageant ]; then
     eval $(/usr/bin/ssh-pageant -q)
 fi
 trap logout HUP
-
-__git_ps1 () {
-    local b="$(git symbolic-ref HEAD 2>/dev/null)"
-    if [ -n "$b" ]; then 
-        echo "(${b##refs/heads/}) "; 
-    fi
-}
-
-export PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\n\$(__git_ps1)\[\e[0m\]\$ "
 
