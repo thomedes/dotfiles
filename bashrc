@@ -120,33 +120,54 @@ genPS1 () {
     local tput=$(command -pv tput)
     if [[ -n $tput ]]
     then
-        local black="$(     tput setf 0 )"  #   0: Black        / Dark gray
-        local blue="$(      tput setf 1 )"  #   1: Dark Blue    / Blue
-        local green="$(     tput setf 2 )"  #   2: Dark Green   / Green
-        local cyan="$(      tput setf 3 )"  #   3: Dark Cyan    / Cyan
-        local red="$(       tput setf 4 )"  #   4: Dark Red     / Red
-        local magenta="$(   tput setf 5 )"  #   5: Dark Magenta / Magenta
-        local brown="$(     tput setf 6 )"  #   6: Brown        / Yellow
-        local gray="$(      tput setf 7 )"  #   7: Gray         / White
-    
         local bold="$(      tput bold   )"
         local reset="$(     tput sgr0   )"
+
+        local black="$reset$(   tput setf 0 )"  #   0: Black        / Dark gray
+        local blue="$reset$(    tput setf 1 )"  #   1: Dark Blue    / Blue
+        local green="$reset$(   tput setf 2 )"  #   2: Dark Green   / Green
+        local cyan="$reset$(    tput setf 3 )"  #   3: Dark Cyan    / Cyan
+        local red="$reset$(     tput setf 4 )"  #   4: Dark Red     / Red
+        local magenta="$reset$( tput setf 5 )"  #   5: Dark Magenta / Magenta
+        local brown="$reset$(   tput setf 6 )"  #   6: Brown        / Yellow
+        local gray="$reset$(    tput setf 7 )"  #   7: Gray         / White
+    
+        local dark_gray="$bold$(    tput setf 0 )"  #   0: Black        / Dark gray
+        local light_blue="$bold$(     tput setf 1 )"  #   1: Dark Blue    / Blue
+        local light_green="$bold$(    tput setf 2 )"  #   2: Dark Green   / Green
+        local light_cyan="$bold$(     tput setf 3 )"  #   3: Dark Cyan    / Cyan
+        local light_red="$bold$(      tput setf 4 )"  #   4: Dark Red     / Red
+        local light_magenta="$bold$(  tput setf 5 )"  #   5: Dark Magenta / Magenta
+        local yellow="$bold$(    tput setf 6 )"  #   6: Brown        / Yellow
+        local white="$bold$(     tput setf 7 )"  #   7: Gray         / White
     else
         # Use ANSI colors
-        local black="\033[30m"
-        local red="\033[31m"
-        local green="\033[32m"
-        local brown="\033[33m"
-        local blue="\033[34m"
-        local magenta="\033[35m"
-        local cyan="\033[36m"
-        local gray="\033[37m"
-
         local bold="\033[1m"
         local reset="\033[0m$gray"
+
+        local black="$reset\033[30m"
+        local red="$reset\033[31m"
+        local green="$reset\033[32m"
+        local brown="$reset\033[33m"
+        local blue="$reset\033[34m"
+        local magenta="$reset\033[35m"
+        local cyan="$reset\033[36m"
+        local gray="$reset\033[37m"
+
+        local dark_black="$bold\033[30m"
+        local light_red="$bold\033[31m"
+        local light_green="$bold\033[32m"
+        local yellow="$bold\033[33m"
+        local light_blue="$bold\033[34m"
+        local light_magenta="$bold\033[35m"
+        local light_cyan="$bold\033[36m"
+        local white="$bold\033[37m"
     fi
 
-    echo -n "$reset$bold$gray\u$green@$cyan\h$magenta $brown\w$reset"
+    # Color scheme
+    local cs=($yellow $white $light_green $light_red $light_cyan $gray)
+
+    echo -n "${cs[0]}\u${cs[1]}@${cs[2]}\h ${cs[3]}\w"
     
     local git=$(command -pv git)
     
@@ -160,16 +181,12 @@ genPS1 () {
           fi
         }
       fi
-      echo -n "$bold$green\$(__git_ps1)$reset"
+      echo -n "${cs[4]}\$(__git_ps1)$reset"
     fi
     
-    echo "\n\$ "
+    echo "${cs[5]}\n\$ "
 }
 PS1="$(genPS1)"
-
-
-#export PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\n\$(__git_ps1)\[\e[0m\]\$ "
-
 
 unset genPS1
 
