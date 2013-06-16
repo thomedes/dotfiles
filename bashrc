@@ -4,7 +4,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-echo "=> .bashrc"
+#echo "=> .bashrc"   # incompatible with rsync
 
 # If not running interactively, don't do anything
 case $- in
@@ -116,10 +116,17 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+if which git && ! type -t __git_ps1; then
+    __git_ps1 () {
+        local b="$(git symbolic-ref HEAD 2>/dev/null)"
+        if [ -n "$b" ]; then 
+            echo " (${b##refs/heads/})"; 
+        fi
+    }
+fi > /dev/null
+
 genPS1 () {
-    local tput=$(command -pv tput)
-    if [[ -n $tput ]]
-    then
+    if which tput > /dev/null; then
         local bold="$(      tput bold   )"
         local reset="$(     tput sgr0   )"
 
@@ -169,18 +176,7 @@ genPS1 () {
 
     echo -n "${cs[0]}\u${cs[1]}@${cs[2]}\h ${cs[3]}\w"
     
-    local git=$(command -pv git)
-    
-    # define __git_ps1 if have git && it's not already defined
-    if [[ -n $git ]]; then
-      if [[ ! $(type -t __git_ps1) == function ]]; then
-        __git_ps1 () {
-          local b="$($git symbolic-ref HEAD 2>/dev/null)"
-          if [ -n "$b" ]; then 
-            echo " (${b##refs/heads/})"; 
-          fi
-        }
-      fi
+    if type -t __git_ps1 > /dev/null; then
       echo -n "${cs[4]}\$(__git_ps1)$reset"
     fi
     
