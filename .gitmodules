@@ -4,3 +4,6 @@
 [submodule "emacs/yaml-mode"]
 	path = emacs/yaml-mode
 	url = https://github.com/yoshiki/yaml-mode.git
+[submodule "skype-notify"]
+	path = skype-notify
+	url = https://gist.github.com/1006316.git
