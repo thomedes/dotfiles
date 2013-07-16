@@ -22,3 +22,14 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+
+(setq-default c-basic-offset 4)
+(setq c-default-style '((java-mode . "java")
+                                  (awk-mode . "awk")
+                                  (other . "k&r")))
+
+(setq backup-inhibited t) 	; don't create backup files
+(global-linum-mode t)     	; show line numbers
+(cua-mode 1)                	; Ctrl-ZXCV
+(delete-selection-mode 1)	; delete seleted text when typing
+(add-hook 'window-configuration-change-hook (lambda () (ruler-mode 1)))
