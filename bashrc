@@ -172,15 +172,15 @@ genPS1 () {
     fi
 
     # Color scheme
-    local cs=($yellow $white $light_green $light_red $light_cyan $gray)
+    local cs=($yellow $white $light_green $light_red $light_cyan)
 
     echo -n "${cs[0]}\u${cs[1]}@${cs[2]}\h ${cs[3]}\w"
     
     if type -t __git_ps1 > /dev/null; then
-      echo -n "${cs[4]}\$(__git_ps1)$reset"
+      echo -n "${cs[4]}\$(__git_ps1)"
     fi
     
-    echo "${cs[5]}\n\$ "
+    echo "$reset\n\$ "
 }
 PS1="$(genPS1)"
 
