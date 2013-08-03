@@ -33,3 +33,6 @@
 (cua-mode 1)                	; Ctrl-ZXCV
 (delete-selection-mode 1)	; delete seleted text when typing
 (add-hook 'window-configuration-change-hook (lambda () (ruler-mode 1)))
+
+(require 'auto-complete-etags)
+(add-to-list 'ac-sources 'ac-source-etags)
