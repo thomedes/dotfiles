@@ -23,7 +23,14 @@ case "$(uname -o)" in
 
         function start_pageant {
             echo "Initializing new SSH agent..."
-            ssh-pageant.exe | sed 's/^echo/#echo/' > "${SSH_ENV}"
+            case "$(uname -m)" in
+                (x86_64)
+                    ssh-pageant-64.exe
+                    ;;
+                (*)
+                    ssh-pageant.exe
+                    ;;
+            esac | sed 's/^echo/#echo/' > "${SSH_ENV}"
             echo "succeded"
             chmod 600 "${SSH_ENV}"
             . "${SSH_ENV}" > /dev/null
