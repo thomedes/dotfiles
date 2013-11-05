@@ -11,6 +11,7 @@
  '(inhibit-startup-screen t)
  '(scroll-bar-mode (quote right))
  '(show-paren-mode t)
+ '(show-trailing-whitespace t)
  '(transient-mark-mode (quote (only . t))))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
