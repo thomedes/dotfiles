@@ -122,14 +122,14 @@ fi
 if which git && ! type -t __git_ps1; then
     __git_ps1 () {
         local b="$(git symbolic-ref HEAD 2>/dev/null)"
-        if [ -n "$b" ]; then 
-            echo " (${b##refs/heads/})"; 
+        if [ -n "$b" ]; then
+            echo " (${b##refs/heads/})";
         fi
     }
 fi > /dev/null
 
 genPS1 () {
-    if which tput > /dev/null; then
+    if which tput > /dev/null 2>&1; then
         local bold="$(      tput bold   )"
         local reset="$(     tput sgr0   )"
 
@@ -141,7 +141,7 @@ genPS1 () {
         local magenta="$reset$( tput setf 5 )"  #   5: Dark Magenta / Magenta
         local brown="$reset$(   tput setf 6 )"  #   6: Brown        / Yellow
         local gray="$reset$(    tput setf 7 )"  #   7: Gray         / White
-    
+
         local dark_gray="$bold$(    tput setf 0 )"  #   0: Black        / Dark gray
         local light_blue="$bold$(     tput setf 1 )"  #   1: Dark Blue    / Blue
         local light_green="$bold$(    tput setf 2 )"  #   2: Dark Green   / Green
@@ -178,11 +178,11 @@ genPS1 () {
     local cs=($yellow $white $light_green $light_red $light_cyan)
 
     echo -n "${cs[0]}\u${cs[1]}@${cs[2]}\h ${cs[3]}\w"
-    
+
     if type -t __git_ps1 > /dev/null; then
       echo -n "${cs[4]}\$(__git_ps1)"
     fi
-    
+
     echo "$reset\n\$ "
 }
 PS1="$(genPS1)"
@@ -192,7 +192,7 @@ unset genPS1
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if [[ $(uname -o) != Cygwin ]]; then    
+if [[ $(uname -o) != Cygwin ]]; then
   if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
       . /usr/share/bash-completion/bash_completion
