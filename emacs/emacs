@@ -22,6 +22,7 @@
 (global-auto-revert-mode t)
 
 (add-to-list 'load-path "~/dotfiles/emacs")
+(add-to-list 'load-path "~/dotfiles/emacs/yaml-mode")
 (require 'php-mode)
 (require 'yaml-mode)
 (require 'apache-mode)
