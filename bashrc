@@ -183,7 +183,7 @@ genPS1 () {
       echo -n "${cs[4]}\$(__git_ps1)"
     fi
 
-    echo "$reset\n\$ "
+    echo "$reset\n\\$ "
 }
 PS1="$(genPS1)"
 
@@ -201,3 +201,4 @@ if [[ $(uname -o) != Cygwin ]]; then
     fi
   fi
 fi
+
