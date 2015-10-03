@@ -24,4 +24,6 @@ case "$(uname -o)" in
         ;;
 esac
 
+EDITOR=emacs
+
 [[ -r ~/.bashrc ]] && . ~/.bashrc
