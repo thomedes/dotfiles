@@ -185,6 +185,9 @@ genPS1 () {
 
     echo "$reset\n\\$ "
 }
+
+alias temacs="emacs -nw"
+
 PS1="$(genPS1)"
 
 unset genPS1
