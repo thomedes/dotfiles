@@ -10,3 +10,6 @@
 [submodule "emacs/scss-mode"]
 	path = emacs/scss-mode
 	url = https://github.com/antonj/scss-mode.git
+[submodule "emacs/markdown"]
+	path = emacs/markdown-mode
+	url = https://github.com/jrblevin/markdown-mode.git

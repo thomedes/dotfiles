@@ -37,9 +37,12 @@
 (add-to-list 'load-path "~/dotfiles/emacs")
 (add-to-list 'load-path "~/dotfiles/emacs/yaml-mode")
 (add-to-list 'load-path "~/dotfiles/emacs/scss-mode")
+(add-to-list 'load-path "~/dotfiles/emacs/markdown-mode")
 (require 'php-mode)
 (require 'yaml-mode)
 (require 'apache-mode)
+(require 'markdown-mode)
+
 (autoload 'scss-mode "scss-mode")
 
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
