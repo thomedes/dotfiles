@@ -8,7 +8,7 @@ set backspace=indent,eol,start
 "colorscheme desert        " set colorscheme
 "colorscheme koehler
 "colorscheme ron
-colorscheme torte
+"colorscheme torte
 set number                " show line numbers
 set laststatus=2          " last window always has a statusline
 set nohlsearch            " Don't continue to highlight searched phrases.
@@ -39,6 +39,9 @@ set ruler
 set showmatch
 " How many tenths of a second to blink when matching brackets
 set mat=2
+                                                                                
+set colorcolumn=80                                                              
+highlight ColorColumn ctermbg=gray                                              
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -64,3 +67,7 @@ set si "Smart indent
 "set wrap "Wrap lines
 set nowrap                " don't wrap text
 
+augroup project
+    autocmd!
+    autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+augroup END
