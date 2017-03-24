@@ -39,9 +39,9 @@ set ruler
 set showmatch
 " How many tenths of a second to blink when matching brackets
 set mat=2
-                                                                                
-set colorcolumn=80                                                              
-highlight ColorColumn ctermbg=gray                                              
+
+set colorcolumn=80
+highlight ColorColumn ctermbg=gray
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -70,4 +70,5 @@ set nowrap                " don't wrap text
 augroup project
     autocmd!
     autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+    autocmd BufRead,BufNewFile *.hpp,*.cpp set filetype=cpp.doxygen
 augroup END
