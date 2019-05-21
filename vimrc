@@ -72,3 +72,4 @@ augroup project
     autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
     autocmd BufRead,BufNewFile *.hpp,*.cpp set filetype=cpp.doxygen
 augroup END
+set background=dark
