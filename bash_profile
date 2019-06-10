@@ -1,6 +1,9 @@
 #! /bin/bash
 
-autotrash -d 15
+if type -p autotrash > /dev/null
+then
+    autotrash -d 15
+fi
 
 # Set PATH so it includes user's private bin if it exists
 if [ -d "${HOME}/bin" ] ; then
