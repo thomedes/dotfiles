@@ -125,27 +125,50 @@ if which git && ! type -t __git_ps1; then
 fi > /dev/null
 
 genPS1 () {
+
     if which tput > /dev/null 2>&1; then
         local bold="$(      tput bold   )"
         local reset="$(     tput sgr0   )"
 
-        local black="$reset$(   tput setf 0 )"  #   0: Black        / Dark gray
-        local blue="$reset$(    tput setf 1 )"  #   1: Dark Blue    / Blue
-        local green="$reset$(   tput setf 2 )"  #   2: Dark Green   / Green
-        local cyan="$reset$(    tput setf 3 )"  #   3: Dark Cyan    / Cyan
-        local red="$reset$(     tput setf 4 )"  #   4: Dark Red     / Red
-        local magenta="$reset$( tput setf 5 )"  #   5: Dark Magenta / Magenta
-        local brown="$reset$(   tput setf 6 )"  #   6: Brown        / Yellow
-        local gray="$reset$(    tput setf 7 )"  #   7: Gray         / White
+        # Check if terminal is setf capable and use setaf if not
+        if tput setf 0 > /dev/null
+        then
+            local black="$reset$(   tput setf 0 )"  #   0: Black        / Dark gray
+            local blue="$reset$(    tput setf 1 )"  #   1: Dark Blue    / Blue
+            local green="$reset$(   tput setf 2 )"  #   2: Dark Green   / Green
+            local cyan="$reset$(    tput setf 3 )"  #   3: Dark Cyan    / Cyan
+            local red="$reset$(     tput setf 4 )"  #   4: Dark Red     / Red
+            local magenta="$reset$( tput setf 5 )"  #   5: Dark Magenta / Magenta
+            local brown="$reset$(   tput setf 6 )"  #   6: Brown        / Yellow
+            local gray="$reset$(    tput setf 7 )"  #   7: Gray         / White
 
-        local dark_gray="$bold$(    tput setf 0 )"  #   0: Black        / Dark gray
-        local light_blue="$bold$(     tput setf 1 )"  #   1: Dark Blue    / Blue
-        local light_green="$bold$(    tput setf 2 )"  #   2: Dark Green   / Green
-        local light_cyan="$bold$(     tput setf 3 )"  #   3: Dark Cyan    / Cyan
-        local light_red="$bold$(      tput setf 4 )"  #   4: Dark Red     / Red
-        local light_magenta="$bold$(  tput setf 5 )"  #   5: Dark Magenta / Magenta
-        local yellow="$bold$(    tput setf 6 )"  #   6: Brown        / Yellow
-        local white="$bold$(     tput setf 7 )"  #   7: Gray         / White
+            local dark_gray="$bold$(    tput setf 0 )"  #   0: Black        / Dark gray
+            local light_blue="$bold$(   tput setf 1 )"  #   1: Dark Blue    / Blue
+            local light_green="$bold$(  tput setf 2 )"  #   2: Dark Green   / Green
+            local light_cyan="$bold$(   tput setf 3 )"  #   3: Dark Cyan    / Cyan
+            local light_red="$bold$(    tput setf 4 )"  #   4: Dark Red     / Red
+            local light_magenta="$bold$(tput setf 5 )"  #   5: Dark Magenta / Magenta
+            local yellow="$bold$(       tput setf 6 )"  #   6: Brown        / Yellow
+            local white="$bold$(        tput setf 7 )"  #   7: Gray         / White
+        else
+            local black="$reset$(   tput setaf 0 )"  #   0: Black        / Dark gray
+            local red="$reset$(     tput setaf 1 )"  #   1: Dark Red     / Red
+            local green="$reset$(   tput setaf 2 )"  #   2: Dark Green   / Green
+            local brown="$reset$(   tput setaf 3 )"  #   3: Brown        / Yellow
+            local blue="$reset$(    tput setaf 4 )"  #   4: Dark Blue    / Blue
+            local magenta="$reset$( tput setaf 5 )"  #   5: Dark Magenta / Magenta
+            local cyan="$reset$(    tput setaf 6 )"  #   6: Dark Cyan    / Cyan
+            local gray="$reset$(    tput setaf 7 )"  #   7: Gray         / White
+
+            local dark_gray="$bold$(    tput setaf 0 )"  #   0: Black        / Dark gray
+            local light_red="$bold$(    tput setaf 1 )"  #   1: Dark Red     / Red
+            local light_green="$bold$(  tput setaf 2 )"  #   2: Dark Green   / Green
+            local yellow="$bold$(       tput setaf 3 )"  #   3: Brown        / Yellow
+            local light_blue="$bold$(   tput setaf 4 )"  #   4: Dark Blue    / Blue
+            local light_magenta="$bold$(tput setaf 5 )"  #   5: Dark Magenta / Magenta
+            local light_cyan="$bold$(   tput setaf 6 )"  #   6: Dark Cyan    / Cyan
+            local white="$bold$(        tput setaf 7 )"  #   7: Gray         / White
+        fi
     else
         # Use ANSI colors
         local bold="\033[1m"
