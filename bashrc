@@ -2,6 +2,10 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# vim: ft=sh
+
+echo .bashrc >&2
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -73,6 +77,8 @@ xterm*|rxvt*)
 esac
 
 [[ -d ~/bin ]] && export PATH=~/bin:"$PATH"
+[[ -d ~/.local/bin ]] && export PATH=~/.local/bin:"$PATH"
+
 
 if [ -f /etc/bashrc ]; then
     . /etc/bashrc
@@ -196,13 +202,14 @@ genPS1 () {
     # Color scheme
     local cs=($yellow $white $light_green $light_red $light_cyan)
 
-    echo -n "${cs[0]}\u${cs[1]}@${cs[2]}\h ${cs[3]}\w"
+    # Using \[ \] to enclose non-printing characters (see bash manual)
+    echo -n "\[${cs[0]}\]\u\[${cs[1]}\]@\[${cs[2]}\]\h \[${cs[3]}\]\w"
 
     if type -t __git_ps1 > /dev/null; then
-      echo -n "${cs[4]}\$(__git_ps1)"
+      echo -n "\[${cs[4]}\]\$(__git_ps1)"
     fi
 
-    echo "$reset\n\\$ "
+    echo "\[$reset\]\n\\$ "
 }
 
 alias temacs="emacs -nw"
@@ -223,4 +230,6 @@ if [[ $(uname -o) != Cygwin ]]; then
     fi
   fi
 fi
+
+[[ -x ~/.cargo/env ]] && . ~/.cargo/env
 
